@@ -17,10 +17,14 @@
 <body>
 {{ if .Site.Menus.main }}{{ partial "nav.html" . }}{{ end -}}
 <main>
-<header><h1 id="tag_{{ .Title }}">{{ block "title" . }}{{ end }}</h1></header>
+<div id="header">
+<header><img class='logo' src='{{ .Param "logo"}}'><span id="tag_{{ .Title }}" class="title">{{ block "title" . }}{{ end }}</span></header>
+</div>
 <article>
 {{ block "main" . }}
+<div id="content">
 {{ .Content }}
+</div>
 {{ end }}
 {{ if .Param "nextprev" }}{{ partial "nextprev.html" . -}}{{ end -}}
 {{ if .Param "taglist" }}{{ partial "taglist.html" . }}{{ end -}}
