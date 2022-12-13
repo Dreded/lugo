@@ -1,40 +1,77 @@
 <!DOCTYPE html>
 <html lang="{{ .Site.Language }}">
+
 <head>
 	<title>{{ if not .IsHome }}{{ .Title | title }} | {{ end }}{{ .Site.Title }}</title>
 	<link rel="canonical" href="{{ .Site.BaseURL }}">
 	<link rel='alternate' type='application/rss+xml' title="{{ .Site.Title }} RSS" href='/index.xml'>
 	<link rel='stylesheet' type='text/css' href='/style.css'>
-	{{ with .Site.Params.favicon }}<link rel="icon" href="{{ . }}">
+	{{ with .Site.Params.favicon }}
+	<link rel="icon" href="{{ . }}">
 	{{ end -}}
 	<meta name="description" content="{{ with .Params.description }}{{ . }}{{ else }}{{ .Summary }}{{ end }}">
-	{{ if isset .Params "tags" }}<meta name="keywords" content="{{ with .Params.tags }}{{ delimit . ", " }}{{ end }}">
+	{{ if isset .Params "tags" }}
+	<meta name="keywords" content="{{ with .Params.tags }}{{ delimit . " , " }}{{ end }}">
 	{{ end -}}
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="robots" content="index, follow">
 	<meta charset="utf-8">
 </head>
+
 <body>
-{{ if .Site.Menus.main }}{{ partial "nav.html" . }}{{ end -}}
-<main>
-<div id="header">
-<header><img class='logo' src='{{ .Param "logo"}}'><span id="tag_{{ .Title }}" class="title">{{ block "title" . }}{{ end }}</span></header>
-</div>
-<article>
-{{ block "main" . }}
-<div id="content">
-{{ .Content }}
-</div>
-{{ end }}
-{{ if .Param "nextprev" }}{{ partial "nextprev.html" . -}}{{ end -}}
-{{ if .Param "taglist" }}{{ partial "taglist.html" . }}{{ end -}}
-</article>
-</main>
-{{ block "footer" . }}
-<footer>
-	<a href="{{ .Site.BaseURL }}">{{ .Site.BaseURL }}</a>
-	{{- if .Param "showrss" }}<br><br><a href="/index.xml"><img src="/rss.svg" style="max-height:1.5em" alt="RSS Feed" title="Subscribe via RSS for updates."></a>{{ end }}
-</footer>
-{{ end }}
+	{{ if .Site.Menus.main }}{{ partial "nav.html" . }}{{ end -}}
+	<main>
+		<a href="/">
+		<div id="header">
+			<header><img class='logo' src='{{ .Param "logo"}}'><span id="tag_{{ .Title }}" class="title">{{ block
+					"title" . }}{{ end }}</span></header>
+		</div>
+		</a>
+		{{ block "main" . }}
+		<div id="content">
+			{{ .Content }}
+		</div>
+		{{ end }}
+		{{ if .Param "nextprev" }}{{ partial "nextprev.html" . -}}{{ end -}}
+		{{ if .Param "taglist" }}{{ partial "taglist.html" . }}{{ end -}}
+	</main>
+	{{ block "footer" . }}
+	<footer>
+		<a href="{{ .Site.BaseURL }}">Home</a>
+		<div class="tmdb_credit">All data gathered using the <a href="https://themoviedb.org" target="_blank"><img height="15px" src="/img/tmdb.svg"></a> API</div>
+		{{- if .Param "showrss" }}<br><br><a href="/index.xml"><img src="/rss.svg" style="max-height:1.5em"
+				alt="RSS Feed" title="Subscribe via RSS for updates."></a>{{ end }}
+	</footer>
+	{{ end }}
 </body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous">
+    </script>
+<script>
+    $('svg.radial-progress').each(function (index, value) {
+        $(this).find($('circle.complete')).removeAttr('style');
+    });
+
+    $(window).scroll(function () {
+        $('svg.radial-progress').each(function (index, value) {
+            // If svg.radial-progress is approximately 25% vertically into the window when scrolling from the top or the bottom
+            if (
+                $(window).scrollTop() > $(this).offset().top - ($(window).height() * 0.75) &&
+                $(window).scrollTop() < $(this).offset().top + $(this).height() - ($(window).height() * 0.25)
+            ) {
+                // Get percentage of progress
+                percent = $(value).data('percentage');
+                // Get radius of the svg's circle.complete
+                radius = $(this).find($('circle.complete')).attr('r');
+                // Get circumference (2πr)
+                circumference = 2 * Math.PI * radius;
+                // Get stroke-dashoffset value based on the percentage of the circumference
+                strokeDashOffset = circumference - ((percent * circumference) / 100);
+                // Transition progress for 1.25 seconds
+                $(this).find($('circle.complete')).animate({ 'stroke-dashoffset': strokeDashOffset }, 1250);
+            }
+        });
+    }).trigger('scroll');
+</script>
 </html>

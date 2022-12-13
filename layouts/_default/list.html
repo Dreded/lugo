@@ -1,7 +1,8 @@
 {{ define "title" -}}
-{{ .Title | title }}
+<img src="/img/title.png" />
 {{- end }}
 {{ define "main" -}}
+<h1>{{ .Title | title }}</h1>
 {{ .Content }}
 <ul>
 {{- range.Pages }}
