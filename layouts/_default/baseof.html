@@ -23,8 +23,7 @@
 	<main>
 		<a href="/">
 		<div id="header">
-			<header><img class='logo' src='{{ .Param "logo"}}'><span id="tag_{{ .Title }}" class="title">{{ block
-					"title" . }}{{ end }}</span></header>
+			<header><img class='logo' src='{{ .Param "logo"}}'><span id="tag_{{ .Title }}" class="title">{{ block "title" . }}{{ end }}</span></header>
 		</div>
 		</a>
 		{{ block "main" . }}
