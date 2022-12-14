@@ -7,7 +7,7 @@
     <meta name="robots" content="index, follow">
     <meta charset="utf-8">
     <!-- Twitter Card data -->
-    <meta name="twitter:card" content="{{ with .Site.Params.description }}{{ . }}{{ else }}{{ .Summary }}{{ end }}">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@slainbynetflix">
     <meta name="twitter:title" content="{{ if not .IsHome }}{{ .Title | title }} | {{ end }}{{ .Site.Title }}">
     <meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}" />
