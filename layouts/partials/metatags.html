@@ -1,0 +1,28 @@
+
+    <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}">
+    {{ if isset .Params "tags" }}
+    <meta name="keywords" content="{{ with .Params.tags }}{{ delimit . " , " }}{{ end }}">
+    {{ end -}}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="index, follow">
+    <meta charset="utf-8">
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="{{ with .Site.Params.description }}{{ . }}{{ else }}{{ .Summary }}{{ end }}">
+    <meta name="twitter:site" content="@slainbynetflix">
+    <meta name="twitter:title" content="{{ if not .IsHome }}{{ .Title | title }} | {{ end }}{{ .Site.Title }}">
+    <meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}" />
+    <meta name="twitter:creator" content="@dreded">
+    {{ with .Params.twitter_card_image }}
+    <meta name="twitter:image" content="gg{{ .Site.BaseURL }}{{ . }}">
+    {{ end -}}
+
+    <!-- Open Graph data -->
+    {{- with .Site.Params.title }}<meta property="og:site_name" content="{{ . }}" />{{ end }}
+    <meta property="og:title" content="{{ if not .IsHome }}{{ .Title | title }} | {{ end }}{{ .Site.Title }}" />
+    <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}" />
+    <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}" />
+    <meta property="og:url" content="{{ .Permalink }}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="{{ .Site.BaseURL }}{{ .Site.Params.meta_image }}" />
+    <meta property="og:site_name" content="{{ if not .IsHome }}{{ .Title | title }} | {{ end }}{{ .Site.Title }}" />
+    <!-- <meta property="fb:admins" content="Facebook numeric ID" /> -->
