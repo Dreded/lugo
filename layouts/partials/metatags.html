@@ -13,7 +13,7 @@
     <meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}" />
     <meta name="twitter:creator" content="@dreded">
     {{ if .Site.Params.twitter_card_image }}
-    <meta name="twitter:image" content="{{ .Site.BaseURL }}{{ . }}">
+    <meta name="twitter:image" content="{{ .Site.BaseURL }}{{ .Site.Params.twitter_card_image }}">
     {{ end -}}
 
     <!-- Open Graph data -->
